@@ -60,8 +60,66 @@ Alternatively, you can also install at the system level using pip, even though w
 pip install .
 ```
 
+## Running Examples
+
+Each example requires running two scripts in separate terminals:
+
+1. First terminal: Run the planner script
+2. Second terminal: Run the world script
+
+### Using the Helper Scripts
+
+We provide helper scripts to simplify running the examples:
+
+```bash
+# First terminal: Run the planner for an example
+./run_example.sh heijn_push planner
+
+# Second terminal: Run the world simulation for the same example
+./run_example.sh heijn_push world
+```
+
+Available examples include:
+- `heijn_push`: A robot pushing a block to a goal position
+- `panda`: A robotic arm reaching for a target
+- `boxer_push`: A robot pushing a block to a goal position
+- And many more in the examples directory
+
+To list all available examples:
+```bash
+ls -1 examples/
+```
+
 ## Troubleshooting
-If you have an Nvidia card and after running the simulation you get a black screen, you might need to force the use of the GPU card through ``export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json``. Run this command from the same folder as the script to be launched for every terminal
+
+### Rendering Issues
+If you have an Nvidia card and after running the simulation you get a black screen, you might need to force the use of the GPU card through the following environment variables:
+
+```bash
+export __NV_PRIME_RENDER_OFFLOAD=1
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+export LD_LIBRARY_PATH=/path/to/your/conda/env/lib:$LD_LIBRARY_PATH
+```
+
+Replace `/path/to/your/conda/env/lib` with the path to your conda/mamba environment's lib folder. Run these commands before launching any script.
+
+Note: The `setup_env.sh` script included in this repository automatically sets these environment variables for you.
+
+### Client-Server Timeout Issues
+If you encounter timeout errors like `zerorpc.exceptions.LostRemote: Lost remote after 10s heartbeat` when running the client-server examples, you may need to increase the zerorpc timeout settings. Here's how to modify the scripts:
+
+1. In the world.py (server) script, increase the timeout and heartbeat when creating the zerorpc client:
+   ```python
+   planner = zerorpc.Client(timeout=60, heartbeat=30)  # Increased from default 10s
+   ```
+
+2. In the planner.py (client) script, increase the heartbeat when creating the zerorpc server:
+   ```python
+   planner = zerorpc.Server(MPPIisaacPlanner(cfg, objective, prior=None), heartbeat=30)
+   ```
+
+These modifications help with systems that have slower rendering performance or when the GPU is under heavy load.
 
 # Running the examples
 Access the virtual environment if installed with poetry (with `poetry shell`). You can run two types of examples, either the ones using IsaacGym or the ones using Pybullet. In the `examples` folder, you find all the scripts. 
