@@ -11,14 +11,16 @@ You can extend the repository with your robots and tasks since it is designed to
 If you found this repository useful, please consider citing the associated paper below:
 
 ```bash
-@misc{pezzato2023samplingbased,
-      title={Sampling-based Model Predictive Control Leveraging Parallelizable Physics Simulations}, 
-      author={Corrado Pezzato and Chadi Salmi and Max Spahn and Elia Trevisan and Javier Alonso-Mora and Carlos Hernandez Corbato},
-      year={2023},
-      eprint={2307.09105},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO}
-}
+@ARTICLE{pezzato_sampling_2025,
+  author={Pezzato, Corrado and Salmi, Chadi and Trevisan, Elia and Spahn, Max and Alonso-Mora, Javier and Hernández Corbato, Carlos},
+  journal={IEEE Robotics and Automation Letters}, 
+  title={Sampling-Based Model Predictive Control Leveraging Parallelizable Physics Simulations}, 
+  year={2025},
+  volume={10},
+  number={3},
+  pages={2750-2757},
+  keywords={Robots;Collision avoidance;Predictive models;Computational modeling;Physics;Trajectory;Planning;Cost function;Real-time systems;Optimal control;Optimization and Optimal Control;Contact Modeling;Whole-Body Motion Planning and Control;Model Predictive Path Integral Control},
+  doi={10.1109/LRA.2025.3535185}}
 ```
 
 # Installation
